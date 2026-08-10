@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+
+
+<html theme="dark" showBanner="true" hasBanner="true" > 
+<link href="https://cdn.staticfile.org/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet">
+<link href="https://cdn.staticfile.org/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet">
+<link href="https://cdn.staticfile.org/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet">
+<script src="/js/color.global.min.js" ></script>
+<script src="/js/load-settings.js" ></script>
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+
+  
+  <title>星护：面向老年居家看护的边缘 AI 智能体系统 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="preload" href="/css/fonts/Roboto-Regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+  <link rel="preload" href="/css/fonts/Roboto-Bold.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+
+  <meta name="description" content="星护（XingHu）是一个面向老年居家看护场景的边缘 AI 智能体系统，名字取“守护如星，长伴左右”之意。 项目运行在鲁班猫 4 开发板上，主控为 RK3588S，具备 6 TOPS NPU 和 4 GB LPDDR4X 内存。系统使用 Qwen2.5-1.5B-Instruct W8A8 RKLLM 做端侧推理，把自然语言交互、智能家居控制、健康档案、异常告警、用药提醒和健康知识问答放进同一个本">
+<meta property="og:type" content="article">
+<meta property="og:title" content="星护：面向老年居家看护的边缘 AI 智能体系统">
+<meta property="og:url" content="https://fearlessocean.github.io/2026/05/08/%E9%9D%A2%E5%90%91%E8%80%81%E5%B9%B4%E5%B1%85%E5%AE%B6%E7%9C%8B%E6%8A%A4%E7%9A%84%E8%BE%B9%E7%BC%98-AI-%E6%99%BA%E8%83%BD%E4%BD%93%E7%B3%BB%E7%BB%9F/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="星护（XingHu）是一个面向老年居家看护场景的边缘 AI 智能体系统，名字取“守护如星，长伴左右”之意。 项目运行在鲁班猫 4 开发板上，主控为 RK3588S，具备 6 TOPS NPU 和 4 GB LPDDR4X 内存。系统使用 Qwen2.5-1.5B-Instruct W8A8 RKLLM 做端侧推理，把自然语言交互、智能家居控制、健康档案、异常告警、用药提醒和健康知识问答放进同一个本">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://fearlessocean.github.io/images/xinghu/use-case.png">
+<meta property="og:image" content="https://fearlessocean.github.io/images/xinghu/system-architecture.png">
+<meta property="og:image" content="https://fearlessocean.github.io/images/xinghu/request-flow.png">
+<meta property="og:image" content="https://fearlessocean.github.io/images/xinghu/hardware-architecture.png">
+<meta property="og:image" content="https://fearlessocean.github.io/images/xinghu/hardware-board.png">
+<meta property="og:image" content="https://fearlessocean.github.io/images/xinghu/tool-dispatch.png">
+<meta property="article:published_time" content="2026-05-08T06:45:38.000Z">
+<meta property="article:modified_time" content="2026-08-10T09:01:29.777Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Agent">
+<meta property="article:tag" content="Edge AI">
+<meta property="article:tag" content="RAG">
+<meta property="article:tag" content="RK3588S">
+<meta property="article:tag" content="智能家居">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://fearlessocean.github.io/images/xinghu/use-case.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" media="(prefers-color-scheme: light)" href="/images/favicon-light-32.png" sizes="32x32">
+    <link rel="icon" media="(prefers-color-scheme: light)" href="/images/favicon-light-128.png" sizes="128x128">
+    <link rel="icon" media="(prefers-color-scheme: light)" href="/images/favicon-light-180.png" sizes="180x180">
+    <link rel="icon" media="(prefers-color-scheme: light)" href="/images/favicon-light-192.png" sizes="192x192">
+    <link rel="icon" media="(prefers-color-scheme: dark)" href="/images/favicon-dark-32.png" sizes="32x32">
+    <link rel="icon" media="(prefers-color-scheme: dark)" href="/images/favicon-dark-128.png" sizes="128x128">
+    <link rel="icon" media="(prefers-color-scheme: dark)" href="/images/favicon-dark-180.png" sizes="180x180">
+    <link rel="icon" media="(prefers-color-scheme: dark)" href="/images/favicon-dark-192.png" sizes="192x192">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+<body>
+  
+  
+    
+<div id="banner" class="">
+  <img src="/backgrand/5.jpeg" itemprop="image">
+  <div id="banner-dim"></div>
+</div>
+ 
+   
+  <div id="main-grid" class="  ">
+    <div id="nav" class=""  >
+      <navbar id="navbar">
+  <nav id="title-nav">
+    <a href="/">
+      <div id="vivia-logo">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <div>Hexo </div>
+    </a>
+  </nav>
+  <nav id="main-nav">
+    
+      <a class="main-nav-link" href="/">Home</a>
+    
+      <a class="main-nav-link" href="/archives">Archives</a>
+    
+      <a class="main-nav-link" href="/about">About</a>
+    
+  </nav>
+  <nav id="sub-nav">
+    <a id="theme-btn" class="nav-icon">
+      <span class="light-mode-icon"><svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M438.5-829.913v-48q0-17.452 11.963-29.476 11.964-12.024 29.326-12.024 17.363 0 29.537 12.024t12.174 29.476v48q0 17.452-11.963 29.476-11.964 12.024-29.326 12.024-17.363 0-29.537-12.024T438.5-829.913Zm0 747.826v-48q0-17.452 11.963-29.476 11.964-12.024 29.326-12.024 17.363 0 29.537 12.024t12.174 29.476v48q0 17.452-11.963 29.476-11.964 12.024-29.326 12.024-17.363 0-29.537-12.024T438.5-82.087ZM877.913-438.5h-48q-17.452 0-29.476-11.963-12.024-11.964-12.024-29.326 0-17.363 12.024-29.537t29.476-12.174h48q17.452 0 29.476 11.963 12.024 11.964 12.024 29.326 0 17.363-12.024 29.537T877.913-438.5Zm-747.826 0h-48q-17.452 0-29.476-11.963-12.024-11.964-12.024-29.326 0-17.363 12.024-29.537T82.087-521.5h48q17.452 0 29.476 11.963 12.024 11.964 12.024 29.326 0 17.363-12.024 29.537T130.087-438.5Zm660.174-290.87-34.239 32q-12.913 12.674-29.565 12.174-16.653-.5-29.327-13.174-12.674-12.673-12.554-28.826.12-16.152 12.794-28.826l33-35q12.913-12.674 30.454-12.674t30.163 12.847q12.709 12.846 12.328 30.826-.38 17.98-13.054 30.653ZM262.63-203.978l-32 34q-12.913 12.674-30.454 12.674t-30.163-12.847q-12.709-12.846-12.328-30.826.38-17.98 13.054-30.653l33.239-31q12.913-12.674 29.565-12.174 16.653.5 29.327 13.174 12.674 12.673 12.554 28.826-.12 16.152-12.794 28.826Zm466.74 33.239-32-33.239q-12.674-12.913-12.174-29.565.5-16.653 13.174-29.327 12.673-12.674 28.826-13.054 16.152-.38 28.826 12.294l35 33q12.674 12.913 12.674 30.454t-12.847 30.163q-12.846 12.709-30.826 12.328-17.98-.38-30.653-13.054ZM203.978-697.37l-34-33q-12.674-12.913-13.174-29.945-.5-17.033 12.174-29.707t31.326-13.293q18.653-.62 31.326 13.054l32 34.239q11.674 12.913 11.174 29.565-.5 16.653-13.174 29.327-12.673 12.674-28.826 12.554-16.152-.12-28.826-12.794ZM480-240q-100 0-170-70t-70-170q0-100 70-170t170-70q100 0 170 70t70 170q0 100-70 170t-170 70Zm-.247-82q65.703 0 111.475-46.272Q637-414.544 637-480.247t-45.525-111.228Q545.95-637 480.247-637t-111.475 45.525Q323-545.95 323-480.247t45.525 111.975Q414.05-322 479.753-322ZM481-481Z"/></svg></span>
+      <span class="dark-mode-icon"><svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M480.239-116.413q-152.63 0-258.228-105.478Q116.413-327.37 116.413-480q0-130.935 77.739-227.435t206.304-125.043q43.022-9.631 63.87 10.869t3.478 62.805q-8.891 22.043-14.315 44.463-5.424 22.42-5.424 46.689 0 91.694 64.326 155.879 64.325 64.186 156.218 64.186 24.369 0 46.978-4.946 22.609-4.945 44.413-14.076 42.826-17.369 62.967 1.142 20.142 18.511 10.511 61.054Q807.174-280 712.63-198.206q-94.543 81.793-232.391 81.793Zm0-95q79.783 0 143.337-40.217 63.554-40.218 95.793-108.283-15.608 4.044-31.097 5.326-15.49 1.283-31.859.805-123.706-4.066-210.777-90.539-87.071-86.473-91.614-212.092-.24-16.369.923-31.978 1.164-15.609 5.446-30.978-67.826 32.478-108.282 96.152Q211.652-559.543 211.652-480q0 111.929 78.329 190.258 78.329 78.329 190.258 78.329ZM466.13-465.891Z"/></svg></span>
+    </a>
+    
+      <a id="nav-rss-link" class="nav-icon mobile-hide" href="/atom.xml" title="RSS Feed">
+        <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M198-120q-25.846 0-44.23-18.384-18.384-18.385-18.384-44.23 0-25.846 18.384-44.23 18.384-18.385 44.23-18.385 25.846 0 44.23 18.385 18.384 18.384 18.384 44.23 0 25.845-18.384 44.23Q223.846-120 198-120Zm538.385 0q-18.846 0-32.923-13.769-14.076-13.769-15.922-33.23-8.692-100.616-51.077-188.654-42.385-88.039-109.885-155.539-67.5-67.501-155.539-109.885Q283-663.462 182.385-672.154q-19.461-1.846-33.23-16.23-13.769-14.385-13.769-33.846t14.076-32.922q14.077-13.461 32.923-12.23 120.076 8.692 226.038 58.768 105.961 50.077 185.73 129.846 79.769 79.769 129.846 185.731 50.077 105.961 58.769 226.038 1.231 18.846-12.538 32.922Q756.461-120 736.385-120Zm-252 0q-18.231 0-32.423-13.461t-18.653-33.538Q418.155-264.23 348.886-333.5q-69.27-69.27-166.501-84.423-20.077-4.462-33.538-18.961-13.461-14.5-13.461-33.346 0-19.076 13.884-33.23 13.884-14.153 33.115-10.922 136.769 15.384 234.384 112.999 97.615 97.615 112.999 234.384 3.231 19.23-10.538 33.115Q505.461-120 484.385-120Z"/></svg>
+      </a>
+    
+    <div id="nav-menu-btn" class="nav-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M177.37-252.282q-17.453 0-29.477-11.964-12.024-11.963-12.024-29.326t12.024-29.537q12.024-12.174 29.477-12.174h605.26q17.453 0 29.477 11.964 12.024 11.963 12.024 29.326t-12.024 29.537q-12.024 12.174-29.477 12.174H177.37Zm0-186.218q-17.453 0-29.477-11.963-12.024-11.964-12.024-29.326 0-17.363 12.024-29.537T177.37-521.5h605.26q17.453 0 29.477 11.963 12.024 11.964 12.024 29.326 0 17.363-12.024 29.537T782.63-438.5H177.37Zm0-186.217q-17.453 0-29.477-11.964-12.024-11.963-12.024-29.326t12.024-29.537q12.024-12.174 29.477-12.174h605.26q17.453 0 29.477 11.964 12.024 11.963 12.024 29.326t-12.024 29.537q-12.024 12.174-29.477 12.174H177.37Z"/></svg>
+    </div>
+  </nav>
+</navbar>
+<div id="nav-dropdown" class="hidden">
+  <div id="dropdown-link-list">
+    
+      <a class="nav-dropdown-link" href="/">Home</a>
+    
+      <a class="nav-dropdown-link" href="/archives">Archives</a>
+    
+      <a class="nav-dropdown-link" href="/about">About</a>
+    
+    
+      <a class="nav-dropdown-link" href="/atom.xml" title="RSS Feed">RSS</a>
+     
+    </div>
+</div>
+<script>
+  let dropdownBtn = document.getElementById("nav-menu-btn");
+  let dropdownEle = document.getElementById("nav-dropdown");
+  dropdownBtn.onclick = function() {
+    dropdownEle.classList.toggle("hidden");
+  }
+</script>
+    </div>
+    <div id="sidebar-wrapper">
+      <sidebar id="sidebar">
+  
+    <div class="widget-wrap">
+  <div class="info-card">
+    <div class="avatar">
+      
+        <image src=/touxiang/6.jpg></image>
+      
+      <div class="img-dim"></div>
+    </div>
+    <div class="info">
+      <div class="username">曹海洋 </div>
+      <div class="dot"></div>
+      <div class="subtitle">中国海洋大学 </div>
+      <div class="link-list">
+        
+          <a class="link-btn" target="_blank" rel="noopener" href="https://github.com/FearlessOcean" title="GitHub"><i class="fa-brands fa-github"></i></a>
+         
+      </div>  
+    </div>
+  </div>
+</div>
+
+  
+  <div class="sticky">
+    
+      
+
+
+  <div class="widget-wrap">
+    <div class="widget">
+      <h3 class="widget-title">Categories</h3>
+      <div class="category-box">
+            <a class="category-link" href="/categories/%E9%A1%B9%E7%9B%AE%E4%BD%9C%E5%93%81/">
+                项目作品
+                <div class="category-count">2</div>
+            </a>
+        </div>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget-wrap">
+    <div class="widget">
+      <h3 class="widget-title">Tags</h3>
+      <ul class="widget-tag-list" itemprop="keywords"><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/Agent/" rel="tag">Agent</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/Edge-AI/" rel="tag">Edge AI</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/FastAPI/" rel="tag">FastAPI</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/LLM/" rel="tag">LLM</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/RAG/" rel="tag">RAG</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/RK3588S/" rel="tag">RK3588S</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/%E6%99%BA%E8%83%BD%E5%AE%B6%E5%B1%85/" rel="tag">智能家居</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE%E5%B1%95%E7%A4%BA/" rel="tag">项目展示</a></li></ul>
+    </div>
+  </div>
+
+
+    
+  </div>
+</sidebar>
+    </div>
+    <div id="content-body">
+       
+
+
+<article id="post-面向老年居家看护的边缘-AI-智能体系统" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  
+    
+   
+  <div class="article-inner">
+    <div class="article-main">
+      <header class="article-header">
+        
+<div class="main-title-bar">
+  <div class="main-title-dot"></div>
+  
+    
+      <h1 class="p-name article-title" itemprop="headline name">
+        星护：面向老年居家看护的边缘 AI 智能体系统
+      </h1>
+    
+  
+</div>
+
+        <div class='meta-info-bar'>
+          <div class="meta-info">
+  <time class="dt-published" datetime="2026-05-08T06:45:38.000Z" itemprop="datePublished">2026-05-08</time>
+</div>
+          <div class="need-seperator meta-info">
+            <div class="meta-cate-flex">
+  
+  <a class="meta-cate-link" href="/categories/%E9%A1%B9%E7%9B%AE%E4%BD%9C%E5%93%81/">项目作品</a>
+   
+</div>
+  
+          </div>
+          <div class="wordcount need-seperator meta-info">
+            4.8k words 
+          </div>
+        </div>
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Agent/" rel="tag">Agent</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Edge-AI/" rel="tag">Edge AI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RAG/" rel="tag">RAG</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RK3588S/" rel="tag">RK3588S</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%99%BA%E8%83%BD%E5%AE%B6%E5%B1%85/" rel="tag">智能家居</a></li></ul>
+
+      </header>
+      <div class="e-content article-entry" itemprop="articleBody">
+        
+          <p>星护（XingHu）是一个面向老年居家看护场景的边缘 AI 智能体系统，名字取“守护如星，长伴左右”之意。</p>
+<p>项目运行在鲁班猫 4 开发板上，主控为 RK3588S，具备 6 TOPS NPU 和 4 GB LPDDR4X 内存。系统使用 <code>Qwen2.5-1.5B-Instruct W8A8 RKLLM</code> 做端侧推理，把自然语言交互、智能家居控制、健康档案、异常告警、用药提醒和健康知识问答放进同一个本地系统里。</p>
+<p>它的核心目标很明确：老人不需要学习复杂指令，子女不需要一直靠电话确认状态，家庭健康数据也不需要上传云端。系统在家庭边缘设备上完成推理和记录，断网时仍能继续运行。</p>
+<video controls preload="metadata" style="width:100%; border-radius:8px;">
+  <source src="/images/videos/xinghu-demo.mp4" type="video/mp4">
+  你的浏览器不支持视频播放。
+</video>
+
+<h2 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h2><p>中国老龄化正在加速。到 2023 年末，60 岁及以上人口已经达到 2.97 亿，占全国总人口的 21.1%。同时，超过 96% 的老年人仍选择居家或社区养老。</p>
+<p>居家养老的难点不是单点设备不足，而是持续看护能力不足。</p>
+<p>独居或半独居老人常见的问题包括：</p>
+<ul>
+<li>子女长期不在身边，电话问候只能覆盖某个时刻，无法持续感知状态。</li>
+<li>高血压、糖尿病、冠心病等慢性病需要长期记录、按时用药和定期关注。</li>
+<li>跌倒、意识障碍、高烧等风险事件的响应窗口很短，发现太晚就可能错过干预时机。</li>
+<li>智能家居、可穿戴设备、健康记录和医疗知识往往分散在不同系统里，互相不联动。</li>
+</ul>
+<p>星护想解决的正是这个中间层问题：把“听懂人话”“控制设备”“记录健康”“主动提醒”“异常告警”和“知识问答”整合到一个本地 Agent 中。</p>
+<p><img src="/images/xinghu/use-case.png" alt="典型使用场景示意图"></p>
+<h2 id="产品定位"><a href="#产品定位" class="headerlink" title="产品定位"></a>产品定位</h2><p>星护不是传统智能家居平台，也不是云端聊天助手。</p>
+<p>传统智能家居平台擅长设备互联，但通常只能处理明确指令，比如“打开客厅灯”。面对“奶奶说头有点晕，最近血压也不太好”这类话，它很难理解其中的健康含义，也没有地方长期保存这条记录。</p>
+<p>云端 AI 助手理解能力更强，但居家看护场景有隐私和稳定性要求。血压、血糖、用药记录、告警日志都属于敏感家庭数据，如果每次都上传到云端，很多家庭会有顾虑；网络不稳定时，云端服务也会直接中断。</p>
+<p>医疗级可穿戴设备功能更专一，但和家庭设备、健康档案、自然语言交互之间缺少联动。</p>
+<p>星护的定位是运行在家庭边缘设备上的本地 AI 智能体：</p>
+<ul>
+<li>数据不出家门。</li>
+<li>断网仍可运行。</li>
+<li>自然语言作为主要交互方式。</li>
+<li>健康档案、设备状态、告警日志和用药提醒全部本地持久化。</li>
+<li>后台守护进程可以主动巡检，而不是必须等用户说话。</li>
+</ul>
+<h2 id="系统架构"><a href="#系统架构" class="headerlink" title="系统架构"></a>系统架构</h2><p>系统采用分层解耦设计，从用户界面到硬件驱动共分五层：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">用户交互层</span><br><span class="line">  main.py + Streamlit 监控面板</span><br><span class="line"></span><br><span class="line">智能体核心层</span><br><span class="line">  SmartHomeAgent + MonitorDaemon</span><br><span class="line"></span><br><span class="line">工具执行层</span><br><span class="line">  tools.py 中的 6 类工具函数</span><br><span class="line"></span><br><span class="line">数据持久层</span><br><span class="line">  JSON 健康档案 + 设备状态 + 告警日志 + 用药提醒</span><br><span class="line"></span><br><span class="line">硬件感知层</span><br><span class="line">  RK3588S NPU + 传感器驱动 + 设备控制接口</span><br></pre></td></tr></table></figure>
+
+<p>这个架构刻意保持简单，没有引入消息队列、微服务或外部向量数据库。数据主要存在 <code>algorithm/data/</code> 目录下的本地文件里，比如：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">health_records.json</span><br><span class="line">device_state.json</span><br><span class="line">reminders.json</span><br><span class="line">alerts.log</span><br></pre></td></tr></table></figure>
+
+<p>这种选择不是为了偷懒，而是为了适应嵌入式设备的资源约束。对于一个运行在家庭边缘设备上的看护系统，少一个常驻服务，就少一份内存开销和故障点。</p>
+<p><img src="/images/xinghu/system-architecture.png" alt="系统分层架构图"></p>
+<h2 id="一次请求怎么处理"><a href="#一次请求怎么处理" class="headerlink" title="一次请求怎么处理"></a>一次请求怎么处理</h2><p>一次自然语言请求进入系统后，会经历四个主要阶段。</p>
+<p>第一步是意图预检。进入 LLM 前，系统先用正则做轻量扫描。如果用户说“删掉”“取消记录”等高风险请求，就直接拦截并返回拒绝响应，不消耗推理资源。若检测到明确操作类指令，例如开灯、调温度、记录健康状态，则可以跳过 RAG 注入，把 token 留给参数提取。</p>
+<p>第二步是 RAG 知识注入。对于健康咨询类输入，系统调用知识库检索相关条目，把检索结果附加到用户输入后再送入模型。知识库共 40 条，覆盖急症处置、慢性病管理、身体症状、居家安全、健康管理和设备环境等主题。</p>
+<p>第三步是工具调用。LLM 输出后，系统通过三通道机制提取工具调用，尽可能把自然语言转成结构化工具参数。</p>
+<p>第四步是工具执行与多轮迭代。工具结果会追加到对话历史中，驱动模型继续推理，最多循环 5 次。简单任务通常 1 到 2 轮完成，复合任务偶尔需要 3 轮。</p>
+<h2 id="后台主动看护"><a href="#后台主动看护" class="headerlink" title="后台主动看护"></a>后台主动看护</h2><p>星护不只在用户提问时工作。<code>MonitorDaemon</code> 作为独立后台线程持续运行，和前台对话服务并行。</p>
+<p>它主要包含两类任务：</p>
+<ul>
+<li>传感器巡检线程：每 30 秒检查环境状态，例如高温、PM2.5、浴室湿度或长时间无活动。</li>
+<li>用药提醒调度线程：每 60 秒扫描 <code>reminders.json</code>，到点触发文字提醒。</li>
+</ul>
+<p>这种设计让系统从“被动聊天”变成“主动看护”。老人不说话时，系统也能持续观察环境和提醒用药。</p>
+<p><img src="/images/xinghu/request-flow.png" alt="单次请求处理流程图"></p>
+<h2 id="模型与端侧推理"><a href="#模型与端侧推理" class="headerlink" title="模型与端侧推理"></a>模型与端侧推理</h2><p>端侧部署有两个硬约束：内存不超过 4 GB，算力不超过 6 TOPS。但真正影响可用性的还有三项能力：</p>
+<ul>
+<li>中文口语理解：能处理“屋里”“有点冷”“奶奶不太舒服”这类非标准表达。</li>
+<li>工具调用参数提取：能准确抽取温度、房间、成员、症状、药名等字段。</li>
+<li>复合任务分解：能处理“帮我记一下血压，顺便把灯关了”这种多意图输入。</li>
+</ul>
+<p>最终选择 <code>Qwen2.5-1.5B-Instruct</code>，并采用 W8A8 量化。<code>Qwen2.5-0.5B</code> 内存占用更低，但复合工具调用可靠性不足；<code>Qwen2.5-7B</code> 综合能力更强，但量化后约 8 GB，超过硬件上限。</p>
+<p>W8A8 的选择也和硬件有关。RK3588S 的 NPU 对 INT8 矩阵乘法有较好支持，能同时兼顾精度、内存和速度。相比更激进的 4-bit 量化，W8A8 在血压、温度、用药剂量等数值参数提取上更稳。</p>
+<p>在鲁班猫 4 上，NPU 推理的实测结果如下：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">平均端到端延迟：5.4 s</span><br><span class="line">最短延迟：0.8 s</span><br><span class="line">最长延迟：22 s</span><br><span class="line">NPU 推理时 CPU 占用：约 20%</span><br><span class="line">峰值内存占用：约 1.9 GB</span><br></pre></td></tr></table></figure>
+
+<p>CPU 占用从 100% 降到约 20% 后，空闲出来的 CPU 算力也为语义 RAG 提供了空间。</p>
+<p><img src="/images/xinghu/hardware-architecture.png" alt="硬件部署架构图"></p>
+<p><img src="/images/xinghu/hardware-board.png" alt="鲁班猫 4 硬件实物图"></p>
+<h2 id="三通道工具调度"><a href="#三通道工具调度" class="headerlink" title="三通道工具调度"></a>三通道工具调度</h2><p>端侧小模型做工具调用时，最容易出问题的地方不是“完全不理解”，而是输出格式不稳定。</p>
+<p>测试中发现，仅依赖标准 Function Calling 时，工具调用成功率约 60%，复合任务场景更低。失败主要来自三类情况：</p>
+<ul>
+<li>模型没有输出标准 <code>tool_calls</code>，而是退化成自然语言。</li>
+<li>JSON 字段名混用，参数类型不稳定。</li>
+<li>多工具任务只输出第一个工具，后续工具遗漏。</li>
+</ul>
+<p>为此，系统设计了三通道渐进式调度：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Channel 1：结构化调用</span><br><span class="line">  模型正常输出 tool_calls，直接解析执行。</span><br><span class="line"></span><br><span class="line">Channel 2：文本 JSON 解析</span><br><span class="line">  模型把工具调用写进 response.content，由正则提取 JSON 片段。</span><br><span class="line"></span><br><span class="line">Channel 3：意图检测与强制提取</span><br><span class="line">  前两条路径失败，但规则检测到明确意图时，直接从用户输入中抽取参数。</span><br></pre></td></tr></table></figure>
+
+<p>Channel 3 体现的是 Neuro-Symbolic Hybrid 的思路：LLM 负责语义理解，规则系统负责确定性执行。对于端侧小模型来说，这种组合比单纯相信模型更可靠。</p>
+<p>三通道联合后，58 个标准测试用例全部通过，工具调用准确率从约 60% 提升到 100%。</p>
+<p><img src="/images/xinghu/tool-dispatch.png" alt="三通道工具调度流程"></p>
+<h2 id="语义-RAG"><a href="#语义-RAG" class="headerlink" title="语义 RAG"></a>语义 RAG</h2><p>早期系统使用关键词频率匹配做知识检索，内存开销为零，但很容易漏召回。</p>
+<p>比如用户说“喘不上气”，知识库里可能写的是“胸闷&#x2F;呼吸困难”；用户说“叫不醒”，知识库条目可能是“意识障碍”。关键词方案无法自然处理这些口语化表达。</p>
+<p>后续系统引入 <code>bge-small-zh-v1.5</code> 做语义嵌入检索：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">模型大小：约 90 MB</span><br><span class="line">向量维度：512</span><br><span class="line">CPU 推理速度：约 50 ms/query</span><br><span class="line">知识库规模：40 条健康知识</span><br><span class="line">预编码向量内存：约 80 KB</span><br><span class="line">总额外内存：约 91 MB</span><br></pre></td></tr></table></figure>
+
+<p>检索时，系统对用户输入实时编码，与预编码知识向量做点积相似度计算，选取超过阈值 <code>0.30</code> 的 top-k 条目注入上下文。</p>
+<p>语义检索升级带来的效果很直接：在 12 条对照查询中，整体召回率从 58% 提升到 92%；近义词和口语变体场景下，从 17% 提升到 83%，标准关键词查询没有退化。</p>
+<h2 id="症状净化"><a href="#症状净化" class="headerlink" title="症状净化"></a>症状净化</h2><p>健康档案最怕写进一堆混乱的口语噪声。</p>
+<p>用户可能会说：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">帮我记一下，奶奶今天有点头晕，还说胸口有点闷。</span><br></pre></td></tr></table></figure>
+
+<p>系统不能把“帮我记一下”这种操作意图也写进健康记录里。为此设计了 8 步症状净化流水线，依次清理行动指令、记录意图词、评估词尾、无关成分，并保留真正有价值的症状描述。</p>
+<p>这样写入 <code>health_records.json</code> 的内容更接近长期可查询的健康档案，而不是聊天日志。</p>
+<h2 id="工具函数"><a href="#工具函数" class="headerlink" title="工具函数"></a>工具函数</h2><p>项目实现了多类工具函数，覆盖设备控制、健康记录、历史查询、异常告警和用药提醒。</p>
+<p>比较核心的三个例子：</p>
+<ul>
+<li><code>control_smart_device</code>：控制灯光、空调等智能设备。</li>
+<li><code>add_health_record</code>：按家庭成员写入健康状态记录。</li>
+<li><code>query_health_records</code>：查询指定成员最近的健康档案。</li>
+</ul>
+<p>工具设计遵循一个原则：Agent 层只依赖标准化接口，不关心底层是真实 GPIO、传感器驱动，还是 Mock 数据。后续接入真实传感器和继电器时，只需要替换工具层底层实现。</p>
+<h2 id="性能与测试"><a href="#性能与测试" class="headerlink" title="性能与测试"></a>性能与测试</h2><p>系统围绕竞赛评分维度做了性能优化：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">工具调用准确率：100%</span><br><span class="line">语义正确率：100%</span><br><span class="line">平均端到端延迟目标：&lt; 10 s</span><br><span class="line">峰值内存目标：&lt; 2 GB</span><br></pre></td></tr></table></figure>
+
+<p>在最终测试中，自研 58 个标准测试用例全部通过。测试覆盖 9 个任务类别：</p>
+<ul>
+<li>设备控制</li>
+<li>健康记录</li>
+<li>健康告警</li>
+<li>历史查询</li>
+<li>用药提醒</li>
+<li>环境感知</li>
+<li>复合任务</li>
+<li>知识问答</li>
+<li>边界情况</li>
+</ul>
+<p>最终结果：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">测试用例总数：58</span><br><span class="line">通过用例数：58（100%）</span><br><span class="line">平均延迟：984 ms</span><br><span class="line">最短延迟：0.1 ms</span><br><span class="line">最长延迟：约 2.9 s</span><br><span class="line">单次对话峰值内存增量：&lt; 5 MB</span><br></pre></td></tr></table></figure>
+
+<p>这里的平均延迟低于完整 NPU 推理链路的 5.4 秒，是因为一部分用例会走正则预检、Channel 3 快速路径或极短 LLM 输出，不需要完整多轮推理。</p>
+<h2 id="可扩展性"><a href="#可扩展性" class="headerlink" title="可扩展性"></a>可扩展性</h2><p>星护在设计之初就把可扩展性作为约束。</p>
+<p>工具扩展方面，新增工具只需要在 <code>tools.py</code> 中添加带类型签名和 docstring 的函数，再把它加入工具列表和系统提示词。三通道调度、历史压缩和 Profiler 不需要跟着改。</p>
+<p>设备扩展方面，设备名和中文标签通过字典维护。当前接入卧室&#x2F;客厅的灯和空调，后续加入窗帘、新风机、热水器时，主要工作在底层驱动适配，Agent 层不需要重写。</p>
+<p>知识库扩展方面，新增健康知识条目后，语义嵌入模式会在下次启动时自动批量编码。当前 40 条覆盖老年看护主要场景，扩展到 100 条以上在技术层面没有障碍。</p>
+<p>后端部署方面，vllm 开发模式和 NPU 生产模式共享 Agent 逻辑，通过环境变量切换：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">XINGHU_USE_NPU=1 python algorithm/main.py</span><br><span class="line">python algorithm/main.py</span><br></pre></td></tr></table></figure>
+
+<p>这让算法调试可以先在 PC 上完成，通过测试后再部署到板子上，减少硬件调试成本。</p>
+<h2 id="当前边界"><a href="#当前边界" class="headerlink" title="当前边界"></a>当前边界</h2><p>当前版本仍然有明确边界。</p>
+<p>设备侧只接入了灯和空调，窗帘、热水器、新风机等还没有纳入；传感器和设备控制仍有 Mock 仿真部分，尚未完全对接真实硬件驱动。模型量化会带来约 2% 到 3% 的精度损失，极少数情况下可能影响参数提取。系统也还没有设计多用户权限隔离，知识库为静态构建，不能替代最新医疗指南，更不能替代临床诊断。</p>
+<p>短期最值得推进的是接入真实传感器驱动，例如 SHT31 I2C、PMS5003 UART，以及 GPIO 继电器，让系统具备完整感知和控制能力。中期可以基于现有测试集进行 SFT 微调，继续提升家庭健康场景下的工具调用稳定性，并把知识库扩展到更多亚专科疾病场景。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>星护这个项目的重点不是“把大模型放进智能家居”，而是把端侧推理、工具调用、健康档案、语义 RAG、主动告警和本地持久化放在同一个资源受限系统里。</p>
+<p>在 4 GB 内存和 6 TOPS NPU 的硬件约束下，系统通过 W8A8 量化、NPU 推理、三通道工具调度、语义 RAG、后台守护进程和本地 JSON 持久化，实现了一个可以演示也可以继续扩展的老年居家看护 Agent。</p>
+<p>它更像是一个小型但完整的边缘 AI 系统实验：模型不是唯一主角，系统边界、数据质量、故障处理和长期可维护性同样重要。</p>
+
+        
+      </div>
+
+         
+    </div>
+    
+     
+  </div>
+  
+    
+<nav id="article-nav">
+  <a class="article-nav-btn left "
+    
+      href="/2026/08/07/%E4%B8%80%E4%B8%AA%E9%9D%A2%E5%90%91%E4%BC%81%E4%B8%9A%E5%94%AE%E5%90%8E%E5%9C%BA%E6%99%AF%E7%9A%84-RAG-%E5%AE%A2%E6%9C%8D-Agent-%E9%A1%B9%E7%9B%AE/"
+      title="一个面向企业售后场景的 RAG 客服 Agent 项目"
+     >
+    <i class="fa-solid fa-angle-left"></i>
+    <p class="title-text">
+      
+        一个面向企业售后场景的 RAG 客服 Agent 项目
+        
+    </p>
+  </a>
+  <a class="article-nav-btn right  disabled "
+     >
+
+    <p class="title-text">
+        
+    </p>
+    <i class="fa-solid fa-angle-right"></i>
+  </a>
+</nav>
+
+
+  
+</article>
+
+
+
+
+
+
+    </div>
+    <div id="footer-wrapper">
+      <footer id="footer">
+  
+  <div id="footer-info" class="inner">
+    
+    &copy; 2026 曹海洋<br>
+    Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & Theme <a target="_blank" rel="noopener" href="https://github.com/saicaca/hexo-theme-vivia">Vivia</a>
+  </div>
+</footer>
+
+    </div>
+    <div class="back-to-top-wrapper">
+    <button id="back-to-top-btn" class="back-to-top-btn hide" onclick="topFunction()">
+        <i class="fa-solid fa-angle-up"></i>
+    </button>
+</div>
+
+<script>
+    function topFunction() {
+        window.scroll({ top: 0, behavior: 'smooth' });
+    }
+    let btn = document.getElementById('back-to-top-btn');
+    function scrollFunction() {
+        if (document.body.scrollTop > 600 || document.documentElement.scrollTop > 600) {
+            btn.classList.remove('hide')
+        } else {
+            btn.classList.add('hide')
+        }
+    }
+    window.onscroll = function() {
+        scrollFunction();
+    }
+</script>
+
+  </div>
+  <script src="/js/light-dark-switch.js"></script>
+</body>
+</html>
