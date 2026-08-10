@@ -51,7 +51,7 @@
   
     
 <div id="banner" class=" is_home ">
-  <img src="/backgrand/4.jpg" itemprop="image">
+  <img src="/backgrand/5.jpeg" itemprop="image">
   <div id="banner-dim"></div>
 </div>
  
@@ -123,21 +123,17 @@
   <div class="info-card">
     <div class="avatar">
       
-        <image src=/touxiang/touxiang.jpg></image>
+        <image src=/touxiang/6.jpg></image>
       
       <div class="img-dim"></div>
     </div>
     <div class="info">
-      <div class="username">OceanCao </div>
+      <div class="username">曹海洋 </div>
       <div class="dot"></div>
-      <div class="subtitle">This is the subtitle </div>
+      <div class="subtitle">中国海洋大学 </div>
       <div class="link-list">
         
-          <a class="link-btn" target="_blank" rel="noopener" href="https://twitter.com" title="Twitter"><i class="fa-brands fa-twitter"></i></a>
-        
-          <a class="link-btn" target="_blank" rel="noopener" href="https://store.steampowered.com" title="Steam"><i class="fa-brands fa-steam"></i></a>
-        
-          <a class="link-btn" target="_blank" rel="noopener" href="https://github.com" title="GitHub"><i class="fa-brands fa-github"></i></a>
+          <a class="link-btn" target="_blank" rel="noopener" href="https://github.com/FearlessOcean" title="GitHub"><i class="fa-brands fa-github"></i></a>
          
       </div>  
     </div>
@@ -212,7 +208,7 @@
   
           </div>
           <div class="wordcount need-seperator meta-info">
-            3k words 
+            6.1k words 
           </div>
         </div>
         
@@ -223,21 +219,12 @@
         
           <div class="truncate-text">
             
-              很多企业招聘页都会写一句：如果有个人主页、项目展示或技术博客会加分。
-这句话以前我只是看过就算了。最近整理 GitHub Pages 个人主页时，我突然觉得，与其只在简历里列几个技术关键词，不如把真正做过的项目写清楚：为什么做、解决什么问题、系统怎么设计、哪些地方考虑到了工程化和生产边界。
-这篇记录的是我最近整理的一个项目：面向企业售后客服场景的本地私有化 RAG + Agent 系统。
-为什么做这个项目企业售后客服不是一个单纯的聊天场景。
-一个真实客服问题里，经常同时涉及：
-
-产品手册、故障排查文档和保修政策；
-订单状态、设备序列号和客户信息；
-售后工单、处理记录和人工升级；
-多轮对话里的上下文；
-权限、安全、日志和降级。
-
-如果只做一个“上传文档然后问答”的 RAG Demo，很容易停留在玩具级别。它可以回答几个知识库问题，但很难说明系统如何接入业务数据、如何保护敏感信息、如何在模型不可用时继续提供服务。
-所以这个项目的目标不是做一个只有聊天框的演示，而是做一个可以本地运行、可以演示、也方便继续扩展的企业客服 Agent MVP。
-系统做了什么这个项目把客服场景拆成了几条主线...
+              这是一个面向企业售后客服场景的本地私有化 RAG + Agent 系统。
+项目把产品知识库、订单与设备数据、保修记录、售后工单和多轮会话整合到统一客服工作台中。后端通过 OpenAI-compatible API 接入本地或内网 vLLM，当前验证模型为 qwen2.5-3b；知识库和查询向量通过 Ollama 部署的 bge-m3:latest 生成，向量维度为 1024。
+它不是一个只有聊天框的 RAG Demo。这个项目更像一个模块化单体 MVP：默认可以完全离线启动，也可以按需切换到 MySQL、Redis、本地 vLLM、Ollama BGE-M3 和 FAISS 等更接近真实环境的组合。接入这些基础设施时，API 层和业务服务层不需要跟着重写。
+场景企业售后客服的问题往往不是单纯的知识问答。
+一个用户可能会问：“订单为什么还没发货？”、“设备无法开机怎么排查？”、“还在不在保修期？”、“能不能直接换新？”这些问题背后同时牵涉产品文档、订单状态、设备序列号、保修政策、工单处理记录和多轮对话上下文。
+如果系统只会把文档丢进向量库再回答，它可以演示 RAG 的基本效果，但很...
             
           </div>
         
@@ -274,7 +261,7 @@
   
   <div id="footer-info" class="inner">
     
-    &copy; 2026 OceanCao<br>
+    &copy; 2026 曹海洋<br>
     Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & Theme <a target="_blank" rel="noopener" href="https://github.com/saicaca/hexo-theme-vivia">Vivia</a>
   </div>
 </footer>
